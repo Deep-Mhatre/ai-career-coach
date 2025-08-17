@@ -1,15 +1,19 @@
 # Full Stack AI Career Coach 🧑‍💻  
 Built with **Next.js, Neon DB, TailwindCSS, Prisma, Inngest, and Shadcn UI**  
 
-🔥 Tutorial: [Watch on YouTube](https://youtu.be/UbXpRv5ApKA)
 
-![sensai](https://github.com/user-attachments/assets/eee79242-4056-4d19-b655-2873788979e1)
 
 ---
 
 ## 👥 Team
 **Team SynapSpark** ✨  
 Innovating at the intersection of **AI, Web Development, and Career Growth**.
+## Team Members
+1.Ashish Bind
+2.Deep Mhatre
+3.Kunal Mali
+4.Shreya Patil
+5.Sushant Telrandhe
 
 ---
 
