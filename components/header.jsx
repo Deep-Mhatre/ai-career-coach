@@ -1,23 +1,22 @@
-import React from "react";
-import { Button } from "./ui/button";
-import {
-  PenBox,
-  LayoutDashboard,
-  FileText,
-  GraduationCap,
-  ChevronDown,
-  StarsIcon,
-} from "lucide-react";
-import Link from "next/link";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  ChevronDown,
+  FileText,
+  GraduationCap,
+  LayoutDashboard,
+  PenBox,
+  StarsIcon,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 export default async function Header() {
   await checkUser();
@@ -27,11 +26,11 @@ export default async function Header() {
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <Image
-            src={"/logo.png"}
+            src={"/marg.jpg"}
             alt="Sensai Logo"
             width={200}
             height={60}
-            className="h-12 py-1 w-auto object-contain"
+            className="h-16.1 py-1 w-auto object-contain drop-shadow-[0_0_10px_rgba(0,255,255,0.6)]"
           />
         </Link>
 
