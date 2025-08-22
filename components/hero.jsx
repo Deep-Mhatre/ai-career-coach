@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 const HeroSection = () => {
   const imageRef = useRef(null);
@@ -55,7 +55,7 @@ const HeroSection = () => {
         <div className="hero-image-wrapper mt-5 md:mt-0">
           <div ref={imageRef} className="hero-image">
             <Image
-              src="/banner.jpeg"
+              src="/margadarshak.jpg"
               width={1280}
               height={720}
               alt="Dashboard Preview"

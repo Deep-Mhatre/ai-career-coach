@@ -81,6 +81,12 @@ export default async function Header() {
                     Interview Prep
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/career-guidance" className="flex items-center gap-2">
+                    <StarsIcon className="h-4 w-4" />
+                    Career Guidance
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SignedIn>
