@@ -1,4 +1,6 @@
 "use client";
+import { ArrowRight, Target, Users, Award } from "lucide-react";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -27,45 +29,107 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="w-full pt-36 md:pt-48 pb-10">
-      <div className="space-y-6 text-center">
-        <div className="space-y-6 mx-auto">
-          <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl gradient-title animate-gradient">
-            Your AI Career Coach for
-            <br />
-            Professional Success
-          </h1>
-          <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
-            Advance your career with personalized guidance, interview prep, and
-            AI-powered tools for job success.
-          </p>
-        </div>
-        <div className="flex justify-center space-x-4">
-          <Link href="/dashboard">
-            <Button size="lg" className="px-8">
-              Get Started
-            </Button>
-          </Link>
-          <Link href="https://github.com/Deep-Mhatre/ai-career-coach">
-            <Button size="lg" variant="outline" className="px-8">
-              Watch Demo
-            </Button>
-          </Link>
-        </div>
-        <div className="hero-image-wrapper mt-5 md:mt-0">
-          <div ref={imageRef} className="hero-image">
-            <Image
-              src="/banner4.png"
-              width={1280}
-              height={720}
-              alt="Dashboard Preview"
-              className="rounded-lg shadow-2xl border mx-auto"
-              priority
-            />
+    <section
+      id="home"
+      className="pt-16 bg-gradient-to-br from-[#003060] to-[#012345]"
+    >
+      {/* Two column layout */}
+      <div className="mx-auto px-6 sm:px-6 lg:px-20 py-20 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+          {/* LEFT SIDE: Text + CTA + Stats */}
+          <div className="space-y-8">
+            {/* Heading */}
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#ffffff] leading-tight">
+                Shape Your <span className="bg-gradient-to-r from-[#68BBE3] via-[#68BBE3] to-[#B3B2E9] bg-clip-text text-transparent">Future</span> with Expert
+                <span className="bg-gradient-to-r from-[#68BBE3] via-[#68BBE3] to-[#B3B2E9] bg-clip-text text-transparent"> Career Guidance</span>
+              </h1>
+
+              <p className="text-lg text-gray-300 leading-relaxed max-w-lg">
+                Advance your career with personalized guidance, interview prep, and
+                AI-powered tools for job success.
+              </p>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-[#68BBE3] to-[#8180DB] hover:opacity-90 text-black px-8 py-3 group transition-all duration-300"
+                >
+                  Start Your Journey
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+
+              </Link>
+
+              <Link href="https://github.com/Deep-Mhatre/ai-career-coach">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-[#0E86D4] text-[#0E86D4] hover:bg-[#0E86D4] hover:text-white px-8 py-3"
+                >
+                  Watch Demo
+                </Button>
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 pt-8">
+              <div className="text-center">
+                <div className="flex items-center justify-center w-12 h-12 bg-[#68BBE3] rounded-full mb-2 mx-auto">
+                  <Users className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-[#ffffff]">10K+</div>
+                <div className="text-sm text-gray-300">Students Guided</div>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center w-12 h-12 bg-[#0E86D4] rounded-full mb-2 mx-auto">
+                  <Target className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold  text-[#ffffff]">95%</div>
+                <div className="text-sm text-gray-300">Success Rate</div>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center w-12 h-12 bg-[#055C9D] rounded-full mb-2 mx-auto">
+                  <Award className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-[#ffffff]">15+</div>
+                <div className="text-sm text-gray-300">Years Experience</div>
+              </div>
+            </div>
           </div>
+
+          {/* RIGHT SIDE: Image */}
+          <div className="relative" ref={imageRef}>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <ImageWithFallback
+                src="/Career-progress.gif"
+                alt="Career guidance counseling session"
+                className="w-full h-full object-cover"
+              />
+              {/* Floating Card */}
+              <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-[#003060]">
+                    Live Career Consultation
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Background Decoration */}
+            <div className="absolute -top-6 -right-6 w-24 h-24 bg-[#68BBE3] rounded-full opacity-20"></div>
+            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-[#0E86D4] rounded-full opacity-30"></div>
+          </div>
+
         </div>
       </div>
     </section>
+
   );
 };
 
