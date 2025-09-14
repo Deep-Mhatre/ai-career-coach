@@ -65,7 +65,7 @@ const HeroSection = () => {
 
               </Link>
 
-              <Link href="https://github.com/Deep-Mhatre/ai-career-coach">
+              <Link href="demo_video.mp4">
                 <Button
                   size="lg"
                   variant="outline"
