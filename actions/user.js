@@ -9,25 +9,11 @@ export async function updateUser(data) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
-
-  let user = await db.user.findUnique({
+  const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
 
-  // If user not found, create a new user record
-  if (!user) {
-    // Get Clerk user info (if available)
-    // You may need to adjust this depending on your auth setup
-    const clerkUser = await auth();
-    user = await db.user.create({
-      data: {
-        clerkUserId: userId,
-        email: clerkUser?.user?.email || "",
-        name: `${clerkUser?.user?.firstName || ""} ${clerkUser?.user?.lastName || ""}`.trim(),
-        imageUrl: clerkUser?.user?.imageUrl || "",
-      }
-    });
-  }
+  if (!user) throw new Error("User not found");
 
   try {
     // Start a transaction to handle both operations
@@ -85,38 +71,11 @@ export async function getUserOnboardingStatus() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
-
-  let user = await db.user.findUnique({
+  const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
 
-  // If user not found, try to find by email and update clerkUserId, or create new
-  if (!user) {
-    // Get Clerk user info (if available)
-    const clerkUser = await auth();
-    // Try to find user by email
-    let existingUser = null;
-    if (clerkUser?.user?.email) {
-      existingUser = await db.user.findUnique({ where: { email: clerkUser.user.email } });
-    }
-    if (existingUser) {
-      // Update clerkUserId for existing user
-      user = await db.user.update({
-        where: { email: clerkUser.user.email },
-        data: { clerkUserId: userId },
-      });
-    } else {
-      // Create new user
-      user = await db.user.create({
-        data: {
-          clerkUserId: userId,
-          email: clerkUser?.user?.email || "",
-          name: `${clerkUser?.user?.firstName || ""} ${clerkUser?.user?.lastName || ""}`.trim(),
-          imageUrl: clerkUser?.user?.imageUrl || "",
-        }
-      });
-    }
-  }
+  if (!user) throw new Error("User not found");
 
   try {
     const user = await db.user.findUnique({
