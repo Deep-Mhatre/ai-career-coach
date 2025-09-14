@@ -57,7 +57,7 @@ Showcase your project in action! Upload your demo video to the `public/` folder 
 
 **Demo:**
 
-[Watch Demo Video](./public/demo_video.mp4)
+[Watch Demo Video](https://drive.google.com/file/d/1oYziUMKt9e9-MWgs8q4ES0woEjHGsB3k/view?usp=drivesdk)
 
 
 ---
