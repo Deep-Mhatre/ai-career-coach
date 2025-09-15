@@ -29,8 +29,7 @@ export async function updateUser(data) {
         // If industry doesn't exist, create it with default values
         if (!industryInsight) {
           const insights = await generateAIInsights(data.industry);
-
-          industryInsight = await db.industryInsight.create({
+          industryInsight = await tx.industryInsight.create({
             data: {
               industry: data.industry,
               ...insights,
@@ -60,7 +59,7 @@ export async function updateUser(data) {
     );
 
     revalidatePath("/");
-    return result.user;
+    return result.updatedUser;
   } catch (error) {
     console.error("Error updating user and industry:", error.message);
     throw new Error("Failed to update profile");
@@ -71,22 +70,25 @@ export async function getUserOnboardingStatus() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
-  const user = await db.user.findUnique({
+  let user = await db.user.findUnique({
     where: { clerkUserId: userId },
+    select: { industry: true, email: true, name: true, imageUrl: true },
   });
 
-  if (!user) throw new Error("User not found");
-
-  try {
-    const user = await db.user.findUnique({
-      where: {
+  // If user not found, create a new user record (basic onboarding)
+  if (!user) {
+    const clerkUser = await auth();
+    user = await db.user.create({
+      data: {
         clerkUserId: userId,
-      },
-      select: {
-        industry: true,
+        email: clerkUser?.user?.email || "",
+        name: `${clerkUser?.user?.firstName || ""} ${clerkUser?.user?.lastName || ""}`.trim(),
+        imageUrl: clerkUser?.user?.imageUrl || "",
       },
     });
+  }
 
+  try {
     return {
       isOnboarded: !!user?.industry,
     };
