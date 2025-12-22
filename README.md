@@ -15,6 +15,8 @@ Innovating at the intersection of AI, Web Development, and Career Growth.
 - Kunal Mali
 - Shreya Patil
 - Sushant Telrandhe
+- Abhishek Mathpati
+- Atharav Shirsat
 
 ---
 
