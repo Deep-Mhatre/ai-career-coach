@@ -8,16 +8,9 @@ An intelligent career guidance platform built with **Next.js**, **Neon DB**, **T
 
 Innovating at the intersection of AI, Web Development, and Career Growth.
 
-**Members:**
+**Made By:**
 
-- Ashish Bind
 - Deep Mhatre
-- Kunal Mali
-- Shreya Patil
-- Sushant Telrandhe
-- Abhishek Mathpati
-- Atharav Shirsat
-
 ---
 
 ## 🚀 Overview
