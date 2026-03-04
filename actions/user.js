@@ -4,6 +4,7 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { generateAIInsights } from "./dashboard";
+import { triggerIndustryInsightsOnDemand } from "@/lib/inngest/trigger";
 
 export async function updateUser(data) {
   const { userId } = await auth();
@@ -16,19 +17,24 @@ export async function updateUser(data) {
   if (!user) throw new Error("User not found");
 
   try {
-    // Start a transaction to handle both operations
+    // Check if industry exists first (outside transaction)
+    let industryInsight = await db.industryInsight.findUnique({
+      where: {
+        industry: data.industry,
+      },
+    });
+
+    // Generate AI insights BEFORE transaction if industry doesn't exist
+    let insights = null;
+    if (!industryInsight) {
+      insights = await generateAIInsights(data.industry);
+    }
+
+    // Start a fast transaction for database operations only
     const result = await db.$transaction(
       async (tx) => {
-        // First check if industry exists
-        let industryInsight = await tx.industryInsight.findUnique({
-          where: {
-            industry: data.industry,
-          },
-        });
-
-        // If industry doesn't exist, create it with default values
-        if (!industryInsight) {
-          const insights = await generateAIInsights(data.industry);
+        // Create industry insight if it doesn't exist
+        if (!industryInsight && insights) {
           industryInsight = await tx.industryInsight.create({
             data: {
               industry: data.industry,
@@ -38,7 +44,7 @@ export async function updateUser(data) {
           });
         }
 
-        // Now update the user
+        // Update the user
         const updatedUser = await tx.user.update({
           where: {
             id: user.id,
@@ -54,12 +60,20 @@ export async function updateUser(data) {
         return { updatedUser, industryInsight };
       },
       {
-        timeout: 10000, // default: 5000
+        timeout: 10000, // Should be plenty now since no AI calls inside
       }
     );
 
-  revalidatePath("/");
-  return result.updatedUser;
+    // Trigger Inngest to generate industry insights asynchronously
+    try {
+      await triggerIndustryInsightsOnDemand(data.industry, userId);
+    } catch (error) {
+      console.warn("Failed to trigger Inngest insights generation:", error);
+      // Don't throw - continue even if Inngest trigger fails
+    }
+
+    revalidatePath("/");
+    return result.updatedUser;
   } catch (error) {
     console.error("Error updating user and industry:", error.message);
     throw new Error("Failed to update profile");
